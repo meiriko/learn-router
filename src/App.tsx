@@ -59,6 +59,30 @@ function App() {
           >
             Bong 2 static
           </ChakraLink>
+          <ChakraLink
+            as={Link}
+            to="/bongs/$bongId/version/$versionId"
+            params={{ bongId: "3", versionId: "5" }}
+            _activeLink={{ fontWeight: "bold", color: "yellow.300" }}
+          >
+            bong 3 version 4
+          </ChakraLink>
+          <ChakraLink
+            as={Link}
+            to="/bongs/$bongId/tag"
+            params={{ bongId: "9" }}
+            _activeLink={{ fontWeight: "bold", color: "yellow.300" }}
+          >
+            bong 9 tag
+          </ChakraLink>
+          <ChakraLink
+            as={Link}
+            to="/bongs/$bongId/tag/$tagId"
+            params={{ bongId: "7", tagId: "y" }}
+            _activeLink={{ fontWeight: "bold", color: "yellow.300" }}
+          >
+            bong 7 tag 7
+          </ChakraLink>
           <Box>darns:</Box>
           <ChakraLink
             as={Link}

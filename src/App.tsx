@@ -2,122 +2,125 @@ import {
   ChakraProvider,
   Box,
   HStack,
-  Link as ChakraLink,
+  Link as ChkraLinkBase,
+  LinkProps as ChakraLinkProps,
 } from "@chakra-ui/react";
-import { Link, Outlet } from "@tanstack/react-router";
+import {
+  // LinkProps as TanstackLinkProps,
+  // ToSubOptions,
+  Link as TanstackLink,
+  LinkOptions as TanstackLinkOptions,
+  Outlet,
+  RegisteredRouter,
+  RoutePaths,
+  ParsePathParams,
+} from "@tanstack/react-router";
 
-const navLinks = ["/", "/about", "/items"];
+// type RoutesTo = RoutePaths<RegisteredRouter["routeTree"]>;
+
+// const navLinks = ["/", "/about", "/items"] as RoutesTo[];
+
+function ChakraLink<TTo extends RoutePaths<RegisteredRouter["routeTree"]>>(
+  props: Omit<TanstackLinkOptions, "params"> &
+    Omit<ChakraLinkProps, "as"> & {
+      // props: Omit<React.ComponentProps<typeof TanstackLink>, "params" | "as"> & {
+      children: React.ReactNode;
+      to: TTo;
+    } & (ParsePathParams<TTo> extends never
+      ? { params?: never }
+      : { params: Record<ParsePathParams<TTo>, string> })
+) {
+  return (
+    <ChkraLinkBase
+      as={TanstackLink}
+      {...props}
+      paddingInlineEnd={2}
+      borderInlineEnd="1px solid red"
+      whiteSpace="nowrap"
+      _activeLink={{ fontWeight: "bold", color: "yellow.300" }}
+    />
+  );
+}
 
 function App() {
   return (
     <ChakraProvider>
       <Box w="100vw" h="100vh" p={4}>
-        <HStack>
-          {navLinks.map((link) => (
-            <ChakraLink
-              as={Link}
-              to={link}
-              _activeLink={{ fontWeight: "bold", color: "yellow.300" }}
-              textTransform="capitalize"
-            >
-              {link === "/" ? "home" : link.replace("/", "")}
+        <TanstackLink
+          to="/bongs/$bongId/tag/$tagId"
+          params={{ bongId: "3", tagId: "4" }}
+        >
+          lala
+        </TanstackLink>
+        <ChakraLink to="/bongs">lala</ChakraLink>
+        <ChakraLink
+          to="/bongs/$bongId/tag/$tagId"
+          params={{ bongId: "3", tagId: "z" }}
+        >
+          lala
+        </ChakraLink>
+        <TanstackLink
+          to="/bongs/$bongId/tag/$tagId"
+          params={{ bongId: "yy", tagId: "z" }}
+        >
+          lala
+        </TanstackLink>
+        <HStack w="full" overflow="hidden" flexWrap="wrap">
+          {/* {navLinks.map((link) => (
+            <ChakraLink to={link} textTransform="capitalize">
+              {link === "/" ? "home" : link?.replace("/", "")}
             </ChakraLink>
-          ))}
-
-          <ChakraLink
-            as={Link}
-            to="/items/$itemId"
-            params={{ itemId: "1" }}
-            _activeLink={{ fontWeight: "bold", color: "yellow.300" }}
-          >
+          ))} */}
+          <Box marginInlineStart={4} color="red.500">
+            items:
+          </Box>
+          <ChakraLink to="/items/$itemId" params={{ itemId: "1" }}>
             Item1
           </ChakraLink>
-          <ChakraLink
-            as={Link}
-            to="/bongs"
-            _activeLink={{ fontWeight: "bold", color: "yellow.300" }}
-          >
-            bongs
+          <ChakraLink to="/items/$itemId/variant-a" params={{ itemId: "2" }}>
+            Item 2 var a
           </ChakraLink>
-          {Array.from({ length: 1 }, () =>
+          <ChakraLink to="/items/$itemId/variant-b" params={{ itemId: "2" }}>
+            Item 2 var b
+          </ChakraLink>
+          <Box marginInlineStart={4} color="red.500">
+            bongs:
+          </Box>
+          <ChakraLink to="/bongs">bongs</ChakraLink>
+          {Array.from({ length: 2 }, () =>
             Math.random().toString(16).slice(2, 6)
           ).map((bongId) => (
-            <ChakraLink
-              key={bongId}
-              as={Link}
-              to="/bongs/$bongId"
-              params={{ bongId }}
-              _activeLink={{ fontWeight: "bold", color: "yellow.300" }}
-            >
+            <ChakraLink key={bongId} to="/bongs/$bongId" params={{ bongId }}>
               Bong {bongId}
             </ChakraLink>
           ))}
           <ChakraLink
-            as={Link}
-            to="/bongs/2"
-            _activeLink={{ fontWeight: "bold", color: "yellow.300" }}
-          >
-            Bong 2 static
-          </ChakraLink>
-          <ChakraLink
-            as={Link}
             to="/bongs/$bongId/version/$versionId"
             params={{ bongId: "3", versionId: "5" }}
-            _activeLink={{ fontWeight: "bold", color: "yellow.300" }}
+            // params={{ bongId: "4" }}
           >
             bong 3 version 4
           </ChakraLink>
-          <ChakraLink
-            as={Link}
-            to="/bongs/$bongId/tag"
-            params={{ bongId: "9" }}
-            _activeLink={{ fontWeight: "bold", color: "yellow.300" }}
-          >
+          <ChakraLink to="/bongs/$bongId/tag" params={{ bongId: "9" }}>
             bong 9 tag
           </ChakraLink>
           <ChakraLink
-            as={Link}
             to="/bongs/$bongId/tag/$tagId"
             params={{ bongId: "7", tagId: "y" }}
-            _activeLink={{ fontWeight: "bold", color: "yellow.300" }}
           >
             bong 7 tag 7
           </ChakraLink>
-          <Box>darns:</Box>
-          <ChakraLink
-            as={Link}
-            to="/darns"
-            _activeLink={{ fontWeight: "bold", color: "yellow.300" }}
-          >
-            darns
-          </ChakraLink>
-          {Array.from({ length: 5 }, () =>
+          <Box marginInlineStart={4} color="red.500">
+            darns:
+          </Box>
+          <ChakraLink to="/darns">darns</ChakraLink>
+          {Array.from({ length: 2 }, () =>
             Math.random().toString(16).slice(2, 6)
           ).map((darnId) => (
-            <ChakraLink
-              key={darnId}
-              as={Link}
-              to="/darns/$darnId"
-              params={{ darnId }}
-              _activeLink={{ fontWeight: "bold", color: "yellow.300" }}
-            >
+            <ChakraLink key={darnId} to="/darns/$darnId" params={{ darnId }}>
               Darn {darnId}
             </ChakraLink>
           ))}
-          {/* <ChakraLink
-            as={Link}
-            to="/"
-            _activeLink={{ fontWeight: "bold", color: "yellow.300" }}
-          >
-            Home
-          </ChakraLink>
-          <ChakraLink
-            as={Link}
-            to="/about"
-            _activeLink={{ fontWeight: "bold", color: "yellow.300" }}
-          >
-            About
-          </ChakraLink> */}
         </HStack>
         <Box as="hr" my={2} />
         <Box>

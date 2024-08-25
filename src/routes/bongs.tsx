@@ -4,7 +4,7 @@ import { createFileRoute, Outlet } from "@tanstack/react-router";
 export const Route = createFileRoute("/bongs")({
   component: () => (
     <Box>
-      <Box>Bong index</Box>
+      <Box>Bong root</Box>
       <Outlet />
     </Box>
   ),

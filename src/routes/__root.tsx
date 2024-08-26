@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
-import { createRootRoute } from "@tanstack/react-router";
+import { createRootRoute, Link } from "@tanstack/react-router";
 import App from "../App";
+import { Box } from "@chakra-ui/react";
 // import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 const TanStackRouterDevtools = import.meta.env.DEV
@@ -15,6 +16,9 @@ const TanStackRouterDevtools = import.meta.env.DEV
   : () => null; // Render nothing in production
 
 export const Route = createRootRoute({
+  // beforeLoad: () => {
+  //   console.log(">>>>>>>>>>>> root >>>>>>>>>>>>>>>");
+  // },
   // component: () => (
   //   <>
   //     <div className="p-2 flex gap-2">
@@ -32,12 +36,27 @@ export const Route = createRootRoute({
   //     </Suspense>
   //   </>
   // ),
-  component: () => (
-    <>
-      <App />
-      <Suspense>
-        <TanStackRouterDevtools />
-      </Suspense>
-    </>
-  ),
+  component: () => {
+    const params = Route.useParams();
+    const search = Route.useSearch();
+    console.log("root params/search: ", params, search);
+
+    return (
+      <>
+        {search?.rootLogin ? <Login /> : <App />}
+        <Suspense>
+          <TanStackRouterDevtools />
+        </Suspense>
+      </>
+    );
+  },
 });
+
+function Login() {
+  return (
+    <Box>
+      <Box>you need to login (root level)</Box>
+      <Link search={{}}>clear</Link>
+    </Box>
+  );
+}

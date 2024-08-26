@@ -4,6 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "prebuild": "yarn generate-routes",
+    "generate-routes": "tsr generate",
+    "watch-routes": "tsr watch",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
@@ -20,6 +23,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
+    "@tanstack/router-cli": "^1.49.3",
     "@tanstack/router-devtools": "^1.50.0",
     "@tanstack/router-plugin": "^1.49.3",
     "@types/react": "^18.3.3",

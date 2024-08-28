@@ -14,7 +14,7 @@ function LayoutB() {
         from="/items/$itemId/variant-b"
         to="../variant-a"
         preload="intent"
-        // preloadTimeout={2500}
+        preloadDelay={3000}
       >
         go to variant A!
       </Link>

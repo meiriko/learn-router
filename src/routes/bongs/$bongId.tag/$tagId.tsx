@@ -1,5 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { PathInfo } from "../../../coponents/PathInfo";
 
 export const Route = createFileRoute("/bongs/$bongId/tag/$tagId")({
   component: TagItem,
@@ -17,8 +18,9 @@ function TagItem() {
         px={2}
         borderInlineStart="1px solid red"
         as={Link}
-        from="/bongs/$bongId"
-        to="tag/$tagId"
+        // from="/bongs/$bongId"
+        // to="tag/$tagId"
+        to="../$tagId"
         params={{ tagId: (tag - 1).toString() }}
         // search={(prev: Record<string, string>) => ({
         //   ...prev,
@@ -45,6 +47,7 @@ function TagItem() {
       >
         goto next tag
       </Box>
+      <PathInfo />
     </Box>
   );
 }

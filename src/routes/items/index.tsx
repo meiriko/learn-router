@@ -8,4 +8,5 @@ export const Route = createFileRoute("/items/")({
       <Outlet />
     </Box>
   ),
+  validateSearch: (search): { itemsXxx?: boolean } => search,
 });

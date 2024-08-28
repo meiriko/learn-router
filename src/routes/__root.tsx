@@ -36,6 +36,7 @@ export const Route = createRootRoute({
   //     </Suspense>
   //   </>
   // ),
+  validateSearch: (search): { rootLogin?: boolean } => search,
   component: () => {
     const params = Route.useParams();
     const search = Route.useSearch();

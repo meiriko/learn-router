@@ -19,12 +19,12 @@ function TagItem() {
         as={Link}
         from="/bongs/$bongId"
         to="tag/$tagId"
-        params={{ tagId: tag - 1 }}
-        search={(prev: Record<string, string>) => ({
-          ...prev,
-          q: "coming-from-" + tag,
-          pp: "yes",
-        })}
+        params={{ tagId: (tag - 1).toString() }}
+        // search={(prev: Record<string, string>) => ({
+        //   ...prev,
+        //   q: "coming-from-" + tag,
+        //   pp: "yes",
+        // })}
       >
         goto prev tag
       </Box>
@@ -34,14 +34,14 @@ function TagItem() {
         as={Link}
         from="/bongs/$bongId/tag"
         to="$tagId"
-        params={{ tagId: tag + 1 }}
-        search={{
-          q: "left-behind-" + tag,
-          pn: "yes",
-          miro: ["x", "yy"],
-          shouldFinish: true,
-          jobj: { a: "b", c: { d: "e" } },
-        }}
+        params={{ tagId: (tag + 1).toString() }}
+        // search={{
+        //   q: "left-behind-" + tag,
+        //   pn: "yes",
+        //   miro: ["x", "yy"],
+        //   shouldFinish: true,
+        //   jobj: { a: "b", c: { d: "e" } },
+        // }}
       >
         goto next tag
       </Box>

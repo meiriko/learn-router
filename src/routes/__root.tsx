@@ -42,7 +42,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     component: () => {
       const params = Route.useParams();
       const search = Route.useSearch();
-      console.log("root params/search: ", params, search);
+      // console.log("root params/search: ", params, search);
 
       return (
         <>

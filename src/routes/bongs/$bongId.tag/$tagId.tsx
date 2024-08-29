@@ -13,22 +13,23 @@ export const Route = createFileRoute("/bongs/$bongId/tag/$tagId")({
     return search;
   },
   loader: (props) => {
-    console.log(">>>> loader tagId: ", props);
-    // const queryKey = ["tags", "zzz", props.deps?.tagOpts];
+    // console.log(">>>> loader tagId: ", props);
     const queryKey = ["tags", props.deps?.tagOpts];
-    props.context.queryClient.setQueryData(queryKey, {
-      miro: "was here",
-      key: queryKey[1],
-      fromLoader: true,
+    props.context.queryClient.ensureQueryData({
+      queryKey,
+      queryFn: () => getTags({ queryKey }, true),
     });
-    return { x: 11, rnd: Date.now() % 1000 };
+    // return { x: 11, rnd: Date.now() % 1000 };
   },
 });
 
-function getTags({ queryKey }: { queryKey: (string | undefined)[] }) {
-  console.log(">>>> getTags: ", queryKey);
+function getTags(
+  { queryKey }: { queryKey: (string | undefined)[] },
+  fromLoader = false
+) {
+  // console.log(">>>> getTags: ", queryKey);
 
-  return { miro: "was here", key: queryKey[1], fromLoader: false };
+  return { miro: "was here", key: queryKey[1], fromLoader };
 }
 
 function TagItem() {
@@ -41,8 +42,15 @@ function TagItem() {
   const query = useQuery({
     queryKey: ["tags", search?.tagOpts],
     queryFn: getTags,
-    staleTime: 100,
+    staleTime: 600,
   });
+  // const router = useRouter();
+  // console.log("*** loader data: ", loaderData?.rnd);
+  // useEffect(() => {
+  //   console.log(">>> invalidating: ", Date.now() % 1000);
+  //   // router.invalidate();
+  //   setTimeout(router.invalidate, 2000);
+  // }, [router]);
 
   return (
     <Box>

@@ -13,10 +13,17 @@ function App() {
             <CustomLink to="/content">content</CustomLink>
             <CustomLink
               to="/bongs/$bongId/tag/$tagId"
-              params={{ bongId: "b", tagId: "t2" }}
-              search={{ itemsXxx: true, lala: "joe" }}
+              params={{ bongId: "b", tagId: "t" }}
+              search={{ itemsXxx: true, miroWasHere: "maybe" }}
             >
               see bong/tag
+            </CustomLink>
+            <CustomLink
+              to="/bongs/$bongId/tag/$tagId"
+              params={{ bongId: "bo", tagId: "to" }}
+              search={{ itemsXxx: true, miroWasHere: "yes" }}
+            >
+              see another bong/tag
             </CustomLink>
           </HStack>
         ) : (

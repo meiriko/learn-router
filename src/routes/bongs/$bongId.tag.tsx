@@ -3,6 +3,9 @@ import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/bongs/$bongId/tag")({
   component: BongTag,
+  validateSearch: (search): { tagOpts?: string } => {
+    return search;
+  },
 });
 
 function BongTag() {

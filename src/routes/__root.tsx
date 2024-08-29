@@ -1,7 +1,8 @@
 import React, { Suspense } from "react";
-import { createRootRoute, Link } from "@tanstack/react-router";
+import { createRootRouteWithContext, Link } from "@tanstack/react-router";
 import App from "../App";
 import { Box } from "@chakra-ui/react";
+import { QueryClient } from "@tanstack/react-query";
 // import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 const TanStackRouterDevtools = import.meta.env.DEV
@@ -15,43 +16,45 @@ const TanStackRouterDevtools = import.meta.env.DEV
     )
   : () => null; // Render nothing in production
 
-export const Route = createRootRoute({
-  // beforeLoad: () => {
-  //   console.log(">>>>>>>>>>>> root >>>>>>>>>>>>>>>");
-  // },
-  // component: () => (
-  //   <>
-  //     <div className="p-2 flex gap-2">
-  //       <Link to="/" className="[&.active]:font-bold">
-  //         Home
-  //       </Link>{" "}
-  //       <Link to="/about" className="[&.active]:font-bold">
-  //         About
-  //       </Link>
-  //     </div>
-  //     <hr />
-  //     <Outlet />
-  //     <Suspense>
-  //       <TanStackRouterDevtools />
-  //     </Suspense>
-  //   </>
-  // ),
-  validateSearch: (search): { rootLogin?: boolean } => search,
-  component: () => {
-    const params = Route.useParams();
-    const search = Route.useSearch();
-    console.log("root params/search: ", params, search);
+export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
+  {
+    // beforeLoad: () => {
+    //   console.log(">>>>>>>>>>>> root >>>>>>>>>>>>>>>");
+    // },
+    // component: () => (
+    //   <>
+    //     <div className="p-2 flex gap-2">
+    //       <Link to="/" className="[&.active]:font-bold">
+    //         Home
+    //       </Link>{" "}
+    //       <Link to="/about" className="[&.active]:font-bold">
+    //         About
+    //       </Link>
+    //     </div>
+    //     <hr />
+    //     <Outlet />
+    //     <Suspense>
+    //       <TanStackRouterDevtools />
+    //     </Suspense>
+    //   </>
+    // ),
+    validateSearch: (search): { rootLogin?: boolean } => search,
+    component: () => {
+      const params = Route.useParams();
+      const search = Route.useSearch();
+      console.log("root params/search: ", params, search);
 
-    return (
-      <>
-        {search?.rootLogin ? <Login /> : <App />}
-        <Suspense>
-          <TanStackRouterDevtools />
-        </Suspense>
-      </>
-    );
-  },
-});
+      return (
+        <>
+          {search?.rootLogin ? <Login /> : <App />}
+          <Suspense>
+            <TanStackRouterDevtools />
+          </Suspense>
+        </>
+      );
+    },
+  }
+);
 
 function Login() {
   return (

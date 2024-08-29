@@ -14,14 +14,14 @@ function App() {
             <CustomLink
               to="/bongs/$bongId/tag/$tagId"
               params={{ bongId: "b", tagId: "t" }}
-              search={{ itemsXxx: true, miroWasHere: "maybe" }}
+              search={{ itemsXxx: true, tagOpts: "maybe" }}
             >
               see bong/tag
             </CustomLink>
             <CustomLink
               to="/bongs/$bongId/tag/$tagId"
               params={{ bongId: "bo", tagId: "to" }}
-              search={{ itemsXxx: true, miroWasHere: "yes" }}
+              search={{ itemsXxx: true, tagOpts: "yes" }}
             >
               see another bong/tag
             </CustomLink>

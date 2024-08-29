@@ -1,6 +1,9 @@
 import { Box } from "@chakra-ui/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PathInfo } from "../../../coponents/PathInfo";
+import { useQuery } from "@tanstack/react-query";
+
+// const queryClient = new QueryClient();
 
 export const Route = createFileRoute("/bongs/$bongId/tag/$tagId")({
   component: TagItem,
@@ -11,9 +14,22 @@ export const Route = createFileRoute("/bongs/$bongId/tag/$tagId")({
   },
   loader: (props) => {
     console.log(">>>> loader tagId: ", props);
+    // const queryKey = ["tags", "zzz", props.deps?.tagOpts];
+    const queryKey = ["tags", props.deps?.tagOpts];
+    props.context.queryClient.setQueryData(queryKey, {
+      miro: "was here",
+      key: queryKey[1],
+      fromLoader: true,
+    });
     return { x: 11, rnd: Date.now() % 1000 };
   },
 });
+
+function getTags({ queryKey }: { queryKey: (string | undefined)[] }) {
+  console.log(">>>> getTags: ", queryKey);
+
+  return { miro: "was here", key: queryKey[1], fromLoader: false };
+}
 
 function TagItem() {
   const params = Route.useParams();
@@ -21,8 +37,16 @@ function TagItem() {
   const deps = Route.useLoaderDeps();
   const loaderData = Route.useLoaderData();
   const tag = Number(params.tagId);
+
+  const query = useQuery({
+    queryKey: ["tags", search?.tagOpts],
+    queryFn: getTags,
+    staleTime: 100,
+  });
+
   return (
     <Box>
+      <Box>Tag item with query {JSON.stringify(query?.data ?? {})}</Box>
       <Box>Tag item with params {JSON.stringify(params)}</Box>
       <Box>Tag item with search {JSON.stringify(search)}</Box>
       <Box>Tag item with deps {JSON.stringify(deps)}</Box>

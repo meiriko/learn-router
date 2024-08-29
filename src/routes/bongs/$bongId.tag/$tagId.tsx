@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useBlocker } from "@tanstack/react-router";
 import { PathInfo } from "../../../coponents/PathInfo";
 import { useQuery } from "@tanstack/react-query";
 
@@ -43,6 +43,10 @@ function TagItem() {
     queryKey: ["tags", search?.tagOpts],
     queryFn: getTags,
     staleTime: 600,
+  });
+  useBlocker({
+    blockerFn: () => window.confirm("Are you sure you want to leave?"),
+    condition: params.tagId === "t",
   });
   // const router = useRouter();
   // console.log("*** loader data: ", loaderData?.rnd);

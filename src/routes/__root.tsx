@@ -39,8 +39,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     //   </>
     // ),
     validateSearch: (search): { rootLogin?: boolean } => search,
+    // beforeLoad: () => {
+    //   if (Math.random() > 0.3) {
+    //     throw new Error("random error");
+    //   }
+    // },
+    // errorComponent: (props) => {
+    //   return <Box>Root Error: {props.error.message}</Box>;
+    // },
     component: () => {
-      const params = Route.useParams();
+      // const params = Route.useParams();
       const search = Route.useSearch();
       // console.log("root params/search: ", params, search);
 

@@ -12,6 +12,25 @@ export const Route = createFileRoute("/bongs/$bongId/tag/$tagId")({
     const { search } = props;
     return search;
   },
+  beforeLoad: (props) => {
+    console.log(">>>> beforeLoad tagId: ", props);
+    if (props.search?.tagOpts === "no") {
+      throw new Error("no tagOpts");
+    }
+  },
+  errorComponent: (props) => {
+    return (
+      <Box onMouseEnter={() => console.log("stack: ", props.error.stack)}>
+        <Box>Something went wrong</Box>
+        <Box>
+          {props.info ? JSON.stringify(props.info, null, 2) : "no info"}
+        </Box>
+        <Box>{props.error.message}</Box>
+        <Box>{props.error.name}</Box>
+        <Box as="pre">{JSON.stringify(props, null, 2)}</Box>
+      </Box>
+    );
+  },
   loader: (props) => {
     // console.log(">>>> loader tagId: ", props);
     const queryKey = ["tags", props.deps?.tagOpts];

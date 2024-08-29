@@ -25,6 +25,13 @@ function App() {
             >
               see another bong/tag
             </CustomLink>
+            <CustomLink
+              to="/bongs/$bongId/tag/$tagId"
+              params={{ bongId: "bno", tagId: "tno" }}
+              search={{ itemsXxx: true, tagOpts: "no" }}
+            >
+              see a failing bong/tag
+            </CustomLink>
           </HStack>
         ) : (
           <HStack w="full" overflow="hidden" flexWrap="wrap">

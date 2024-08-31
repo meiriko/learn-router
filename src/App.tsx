@@ -10,7 +10,51 @@ function App() {
         {showTabs ? (
           <HStack w="full" overflow="hidden" flexWrap="wrap">
             <CustomLink to="/">HOME</CustomLink>
-            <CustomLink to="/content">content</CustomLink>
+            <CustomLink
+              to="/tibo"
+              search={{ itemsXxx: false, miroWasHere: "probably" }}
+            >
+              Tibo
+            </CustomLink>
+            <CustomLink
+              to="/bongs/$bongId/tag/$tagId"
+              params={{ bongId: "bo", tagId: "to" }}
+              search={{ itemsXxx: true, tagOpts: "maybe" }}
+            >
+              see bong/tag
+            </CustomLink>
+            <CustomLink
+              to="/bongs/$bongId/tag/$tagId/$tabId"
+              params={{ bongId: "bo", tagId: "to", tabId: "overview" }}
+              search={{ itemsXxx: true, tagOpts: "maybe" }}
+            >
+              see bong/tag/overview
+            </CustomLink>
+
+            {/* <CustomLink to="/tibo/overview">Tibo overview</CustomLink> */}
+            {/* <CustomLink to="/tibo/st">Tibo st</CustomLink> */}
+            {/* <CustomLink to="/tibo/$tabId" params={{ tabId: "1" }}>
+              Tibo tab1
+            </CustomLink> */}
+            <CustomLink to="/tibo/$tabId" params={{ tabId: "overview" }}>
+              Tibo tab overview
+            </CustomLink>
+            <CustomLink to="/tibo/$tabId" params={{ tabId: "full-details" }}>
+              Tibo tab full details
+            </CustomLink>
+            <CustomLink to="/tibo/$tabId" params={{ tabId: "settings" }}>
+              Tibo tab settings
+            </CustomLink>
+            {/* <CustomLink to="/tibo/st/sub" mask={{ to: "/tibo" }}>
+              Tibo st/sub (masked)
+            </CustomLink> */}
+            {/* <CustomLink to="/tibo/$tabId" params={{ tabId: "1" }}>
+              Tibo tab1
+            </CustomLink>
+            <CustomLink to="/tibo/$tabId" params={{ tabId: "3" }}>
+              Tibo tab3
+            </CustomLink> */}
+            {/* <CustomLink to="/content">content</CustomLink>
             <CustomLink
               to="/bongs/$bongId/tag/$tagId"
               params={{ bongId: "b", tagId: "t" }}
@@ -31,7 +75,7 @@ function App() {
               search={{ itemsXxx: true, tagOpts: "no" }}
             >
               see a failing bong/tag
-            </CustomLink>
+            </CustomLink> */}
           </HStack>
         ) : (
           <HStack w="full" overflow="hidden" flexWrap="wrap">

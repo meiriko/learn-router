@@ -1,7 +1,13 @@
 import { Box } from "@chakra-ui/react";
-import { createFileRoute, Link, useBlocker } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  Outlet,
+  useBlocker,
+} from "@tanstack/react-router";
 import { PathInfo } from "../../../coponents/PathInfo";
 import { useQuery } from "@tanstack/react-query";
+import { toDefaultTabProps } from "../../../routeUtils";
 
 // const queryClient = new QueryClient();
 
@@ -12,12 +18,12 @@ export const Route = createFileRoute("/bongs/$bongId/tag/$tagId")({
     const { search } = props;
     return search;
   },
-  beforeLoad: (props) => {
-    console.log(">>>> beforeLoad tagId: ", props);
-    if (props.search?.tagOpts === "no") {
-      throw new Error("no tagOpts");
-    }
-  },
+  // beforeLoad: (props) => {
+  //   console.log(">>>> beforeLoad tagId: ", props);
+  //   if (props.search?.tagOpts === "no") {
+  //     throw new Error("no tagOpts");
+  //   }
+  // },
   errorComponent: (props) => {
     return (
       <Box onMouseEnter={() => console.log("stack: ", props.error.stack)}>
@@ -40,6 +46,7 @@ export const Route = createFileRoute("/bongs/$bongId/tag/$tagId")({
     });
     // return { x: 11, rnd: Date.now() % 1000 };
   },
+  ...toDefaultTabProps("tabId"),
 });
 
 function getTags(
@@ -116,6 +123,8 @@ function TagItem() {
         goto next tag
       </Box>
       <PathInfo />
+      <Box mt={8}>Below is the outlet</Box>
+      <Outlet />
     </Box>
   );
 }

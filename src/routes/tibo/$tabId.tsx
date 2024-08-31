@@ -18,7 +18,6 @@ function toParseTab<K extends string, T extends readonly string[]>(
     const tab = params?.[tabKey];
     if (!isValidTab(tab)) {
       const result = { ...params, [tabKey]: tabs[0] } as Record<K, T[number]>;
-      // console.log("modifying: ", tab, " to: ", result);
       return result;
     }
     return params as Record<K, T[number]>;

@@ -3,9 +3,6 @@ import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/bongs/$bongId")({
   component: BongComponent,
-  // loader: (p) => {
-  //   console.log(">>>> loading bongid: ", p);
-  // },
 });
 
 function BongComponent() {

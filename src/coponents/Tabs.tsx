@@ -46,16 +46,14 @@ export function TabsContent({
 }: {
   tabsMapping: Record<string, (() => JSX.Element) | undefined>;
   tabKey: string;
-  // route: Omit<Route, "isRoot" | "path" | "fullpath" | "id">;
   route: Pick<Route, "useParams">;
 }) {
-  console.log("route: ", route, tabsMapping);
-  const dbg = route.useParams();
-  const Comp = tabsMapping[dbg[tabKey]] ?? EmptyComp;
+  const tab = route.useParams()[tabKey];
+  const Comp = tabsMapping[tab] ?? EmptyComp;
   return (
     <Box>
       <Box>soon</Box>
-      <Box>tab: {dbg[tabKey]}</Box>
+      <Box>tab: {tab}</Box>
       <Comp />
     </Box>
   );

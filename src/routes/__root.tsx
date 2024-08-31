@@ -18,39 +18,10 @@ const TanStackRouterDevtools = import.meta.env.DEV
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   {
-    // beforeLoad: () => {
-    //   console.log(">>>>>>>>>>>> root >>>>>>>>>>>>>>>");
-    // },
-    // component: () => (
-    //   <>
-    //     <div className="p-2 flex gap-2">
-    //       <Link to="/" className="[&.active]:font-bold">
-    //         Home
-    //       </Link>{" "}
-    //       <Link to="/about" className="[&.active]:font-bold">
-    //         About
-    //       </Link>
-    //     </div>
-    //     <hr />
-    //     <Outlet />
-    //     <Suspense>
-    //       <TanStackRouterDevtools />
-    //     </Suspense>
-    //   </>
-    // ),
     validateSearch: (search): { rootLogin?: boolean } => search,
-    // beforeLoad: () => {
-    //   if (Math.random() > 0.3) {
-    //     throw new Error("random error");
-    //   }
-    // },
-    // errorComponent: (props) => {
-    //   return <Box>Root Error: {props.error.message}</Box>;
-    // },
     component: () => {
       // const params = Route.useParams();
       const search = Route.useSearch();
-      // console.log("root params/search: ", params, search);
 
       return (
         <>

@@ -13,13 +13,11 @@ import { toDefaultTabProps } from "../../../routeUtils";
 
 export const Route = createFileRoute("/bongs/$bongId/tag/$tagId")({
   component: TagItem,
-  loaderDeps: (props) => {
-    // console.log("****** loader deps tagId: ", props);
-    const { search } = props;
-    return search;
-  },
+  // loaderDeps: (props) => {
+  //   const { search } = props;
+  //   return search;
+  // },
   // beforeLoad: (props) => {
-  //   console.log(">>>> beforeLoad tagId: ", props);
   //   if (props.search?.tagOpts === "no") {
   //     throw new Error("no tagOpts");
   //   }
@@ -38,7 +36,6 @@ export const Route = createFileRoute("/bongs/$bongId/tag/$tagId")({
     );
   },
   loader: (props) => {
-    // console.log(">>>> loader tagId: ", props);
     const queryKey = ["tags", props.deps?.tagOpts];
     props.context.queryClient.ensureQueryData({
       queryKey,
@@ -53,8 +50,6 @@ function getTags(
   { queryKey }: { queryKey: (string | undefined)[] },
   fromLoader = false
 ) {
-  // console.log(">>>> getTags: ", queryKey);
-
   return { miro: "was here", key: queryKey[1], fromLoader };
 }
 
@@ -75,9 +70,7 @@ function TagItem() {
     condition: params.tagId === "t",
   });
   // const router = useRouter();
-  // console.log("*** loader data: ", loaderData?.rnd);
   // useEffect(() => {
-  //   console.log(">>> invalidating: ", Date.now() % 1000);
   //   // router.invalidate();
   //   setTimeout(router.invalidate, 2000);
   // }, [router]);

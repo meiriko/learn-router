@@ -25,7 +25,7 @@ function App() {
             </CustomLink>
             <CustomLink
               to="/bongs/$bongId/tag/$tagId/$tabId"
-              params={{ bongId: "bo", tagId: "to", tabId: "overview" }}
+              params={{ bongId: "bo", tagId: "to", tabId: "mid" }}
               search={{ itemsXxx: true, tagOpts: "maybe" }}
             >
               see bong/tag/overview

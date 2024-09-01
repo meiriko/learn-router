@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
-import { toTabsProps } from "../../routeUtils";
+import { addTabProps } from "../../routeUtils";
 import { Tabs } from "../../coponents/Tabs";
 
 const tabs = ["overview", "full-details", "settings"] as const;
@@ -54,10 +54,9 @@ type TTP<K extends string, TABS extends readonly string[]> = (
 //   };
 // }
 
-export const Route = createFileRoute("/tibo/$tabId")({
-  ...toTabsProps("tabId", tabs),
-  component: TiboTab,
-});
+export const Route = createFileRoute("/tibo/$tabId")(
+  addTabProps({ component: TiboTab }, "tabId", tabs)
+);
 
 function TiboTab() {
   const params = Route.useParams();

@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { toDefaultTabProps } from "../../routeUtils";
+import { addDefaultTabProps } from "../../routeUtils";
 
 // const tabs = [
 //   { path: "overview", label: "Overview" },
@@ -8,10 +8,14 @@ import { toDefaultTabProps } from "../../routeUtils";
 //   { path: "settings", label: "Settings" },
 // ];
 
-export const Route = createFileRoute("/tibo")({
-  component: TiboDisplay,
-  ...toDefaultTabProps("tabId"),
-});
+export const Route = createFileRoute("/tibo")(
+  addDefaultTabProps(
+    {
+      component: TiboDisplay,
+    },
+    "tabId"
+  )
+);
 
 function TiboDisplay() {
   return (

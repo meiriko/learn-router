@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { toTabsProps } from "../../../routeUtils";
+import { addTabProps } from "../../../routeUtils";
 import { Box } from "@chakra-ui/react";
 import { Tabs, TabsContent } from "../../../coponents/Tabs";
 
@@ -13,10 +13,15 @@ const tabsMapping = {
 const tabs = Object.keys(tabsMapping) as (keyof typeof tabsMapping)[];
 const tabNames = tabs.map((tab) => ({ label: `zz-${tab}-zz`, value: tab }));
 
-export const Route = createFileRoute("/bongs/$bongId/tag/$tagId/$tabId")({
-  component: TabsDisplay,
-  ...toTabsProps("tabId", tabs),
-});
+export const Route = createFileRoute("/bongs/$bongId/tag/$tagId/$tabId")(
+  addTabProps(
+    {
+      component: TabsDisplay,
+    },
+    "tabId",
+    tabs
+  )
+);
 
 function TabsDisplay() {
   return (

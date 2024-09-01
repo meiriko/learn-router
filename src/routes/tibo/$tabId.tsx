@@ -1,9 +1,34 @@
 import { Box } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
-import { addTabProps } from "../../routeUtils";
-import { Tabs } from "../../coponents/Tabs";
+import {
+  addTabProps,
+  toTabComponents,
+  toTabLabels,
+  toTabs,
+} from "../../routeUtils";
+import { Tabs, TabsContent } from "../../coponents/Tabs";
 
-const tabs = ["overview", "full-details", "settings"] as const;
+// const tabs = ["overview", "full-details", "settings"] as const;
+function Dbg() {
+  return <div>soon</div>;
+}
+const tabsMapping = {
+  overview: Dbg,
+  "full-details": { component: Dbg, label: "everything1" },
+  settings: { component: Dbg },
+} as const;
+const tabs = toTabs(tabsMapping);
+const tabsLabels = toTabLabels(tabsMapping);
+const tabsComponents = toTabComponents(tabsMapping);
+
+// const tabsMappingArr = [
+//   { value: "overview", component: Dbg },
+//   { value: "full-details", component: Dbg, label: "everything2" },
+//   { value: "settings", component: Dbg },
+// ] as const;
+// const tabsA = toTabs(tabsMappingArr);
+// const tabsAL = toTabLabels(tabsMappingArr);
+// const tabsAComp = toTabComponents(tabsMappingArr);
 
 /*
 function toParseTab<K extends string, T extends readonly string[]>(
@@ -62,7 +87,8 @@ function TiboTab() {
   const params = Route.useParams();
   return (
     <Box>
-      <Tabs tabs={tabs} tabKey="tabId" />
+      <Tabs tabs={tabsLabels} tabKey="tabId" />
+      <TabsContent tabsMapping={tabsComponents} route={Route} tabKey="tabId" />
       <Box>In Tibo tab {params.tabId} </Box>
     </Box>
   );

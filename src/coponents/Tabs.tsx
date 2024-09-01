@@ -52,7 +52,6 @@ export function TabsContent({
   const Comp = tabsMapping[tab] ?? EmptyComp;
   return (
     <Box>
-      <Box>soon</Box>
       <Box>tab: {tab}</Box>
       <Comp />
     </Box>

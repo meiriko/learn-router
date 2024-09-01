@@ -1,17 +1,23 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { addTabProps } from "../../../routeUtils";
+import {
+  addTabProps,
+  toTabComponents,
+  toTabLabels,
+  toTabs,
+} from "../../../routeUtils";
 import { Box } from "@chakra-ui/react";
 import { Tabs, TabsContent } from "../../../coponents/Tabs";
-
 // const tabs = ["overview", "full-details", "settings"] as const;
+
 const tabsMapping = {
+  under: { component: UnderDisplay },
+  mid: { label: "the-mid", component: MidDisplay },
   over: OverDisplay,
-  under: UnderDisplay,
-  mid: MidDisplay,
-  mmm: undefined,
 } as const;
-const tabs = Object.keys(tabsMapping) as (keyof typeof tabsMapping)[];
-const tabNames = tabs.map((tab) => ({ label: `zz-${tab}-zz`, value: tab }));
+
+const tabs = toTabs(tabsMapping);
+const tabComponents = toTabComponents(tabsMapping);
+const tabLabels = toTabLabels(tabsMapping);
 
 export const Route = createFileRoute("/bongs/$bongId/tag/$tagId/$tabId")(
   addTabProps(
@@ -27,8 +33,8 @@ function TabsDisplay() {
   return (
     <Box>
       <Box>Hello /bongs/$bongId/tag/$tagId/$tabId!</Box>
-      <Tabs tabs={tabNames} tabKey="tabId" resetSearch />
-      <TabsContent tabsMapping={tabsMapping} route={Route} tabKey="tabId" />
+      <Tabs tabs={tabLabels} tabKey="tabId" resetSearch />
+      <TabsContent tabsMapping={tabComponents} route={Route} tabKey="tabId" />
       <Outlet />
     </Box>
   );

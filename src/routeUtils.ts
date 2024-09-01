@@ -11,7 +11,7 @@ type TabEntry =
   | JSX.ElementType
   | { label?: string; component: JSX.ElementType };
 
-type TabsConfig = Record<string, TabEntry> | TabConfig[];
+type TabsConfig = Record<string, TabEntry> | readonly TabConfig[];
 
 // function firstPropOrDefaultGetter(propNames: string[], defaultValue: unknown) {
 //   return (item: unknown) =>
@@ -44,21 +44,39 @@ function getWithKey(getter: (item: unknown, key: string) => unknown) {
   return (item: unknown, key: string) => [key, getter(item, key)];
 }
 
-export function toTabs(tabs: TabsConfig) {
-  return _.map(tabs, getPropOrKey("value")) as string[];
+type ConfigKeyType<T extends TabsConfig> =
+  T extends Record<string, TabEntry>
+    ? keyof T
+    : (T & TabConfig[])[number]["value"];
+
+export function toTabs<T extends TabsConfig>(tabs: T): ConfigKeyType<T>[] {
+  return _.map(tabs, getPropOrKey("value")) as ConfigKeyType<T>[];
 }
 
 export function toTabNames(tabs: TabsConfig) {
   return _.map(tabs, getPropOrKey(["label", "value"])) as string[];
 }
 
+const labelValueKeys = [["label", "value"], ["value"]];
+
+function toLabelValue(
+  getter: (
+    props: string | string[]
+  ) => (item: unknown, key: string | never) => unknown
+) {
+  const mappers = _.map(labelValueKeys, getter);
+  return (item: unknown, key: string) => _.map(mappers, (f) => f(item, key));
+}
+
 export function toTabLabels(
   tabs: TabsConfig
 ): { label: string; value: string }[] {
-  const getter = getPropOrKey("label");
   return _.map(
-    _.map(tabs, getWithKey(getter)) as [string, string][],
-    ([value, label]) => ({
+    _.map(
+      tabs,
+      toLabelValue(_.isArray(tabs) ? getPropOrValue : getPropOrKey)
+    ) as [string, string][],
+    ([label, value]) => ({
       label,
       value,
     })

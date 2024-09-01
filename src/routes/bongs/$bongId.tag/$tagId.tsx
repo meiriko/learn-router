@@ -36,7 +36,7 @@ export const Route = createFileRoute("/bongs/$bongId/tag/$tagId")({
     );
   },
   loader: (props) => {
-    const queryKey = ["tags", props.deps?.tagOpts];
+    const queryKey = ["tags"];
     props.context.queryClient.ensureQueryData({
       queryKey,
       queryFn: () => getTags({ queryKey }, true),

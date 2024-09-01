@@ -10,23 +10,24 @@ function App() {
         {showTabs ? (
           <HStack w="full" overflow="hidden" flexWrap="wrap">
             <CustomLink to="/">HOME</CustomLink>
+            <CustomLink to="/tibo">Tibo</CustomLink>
             <CustomLink
-              to="/tibo"
-              search={{ itemsXxx: false, miroWasHere: "probably" }}
+              to="/bongs/$bongId/tag/$tagId"
+              params={{ bongId: "bo", tagId: "to" }}
+              search={{ tagOpts: "maybe" }}
             >
-              Tibo
+              see bong/tag fix me
             </CustomLink>
             <CustomLink
               to="/bongs/$bongId/tag/$tagId"
               params={{ bongId: "bo", tagId: "to" }}
-              search={{ itemsXxx: true, tagOpts: "maybe" }}
             >
               see bong/tag
             </CustomLink>
             <CustomLink
               to="/bongs/$bongId/tag/$tagId/$tabId"
               params={{ bongId: "bo", tagId: "to", tabId: "mid" }}
-              search={{ itemsXxx: true, tagOpts: "maybe" }}
+              search={{ tagOpts: "maybe" }}
             >
               see bong/tag/overview
             </CustomLink>

@@ -65,7 +65,7 @@ type ChakraToTanstackLinkProps<
   "",
   TTo extends undefined ? "" : TTo
 > &
-  TanstackLinkProps &
+  Omit<TanstackLinkProps, "search" | "params" | "to"> &
   Omit<ChakraLinkProps, "as" | "children">;
 
 export function CustomLink<

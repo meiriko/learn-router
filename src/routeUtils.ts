@@ -1,4 +1,74 @@
 import { redirect } from "@tanstack/react-router";
+import _ from "lodash";
+
+type TabConfig = {
+  value: string;
+  label?: string;
+  component: JSX.ElementType;
+};
+
+type TabEntry =
+  | JSX.ElementType
+  | { label?: string; component: JSX.ElementType };
+
+type TabsConfig = Record<string, TabEntry> | TabConfig[];
+
+// function firstPropOrDefaultGetter(propNames: string[], defaultValue: unknown) {
+//   return (item: unknown) =>
+//     _.get(
+//       item,
+//       _.find(propNames, (propName) => _.get(item, propName)) as string,
+//       defaultValue
+//     );
+// }
+
+function getPropOrKey(propNames: string | string[]) {
+  return (item: unknown, key: string) => {
+    const relevantKey = _.isArray(propNames)
+      ? _.find(propNames, (propName) => _.get(item, propName))
+      : propNames;
+    return _.get(item, relevantKey as string, _.isObject(item) ? key : item);
+  };
+}
+
+function getPropOrValue(propNames: string | string[]) {
+  return (item: unknown) => {
+    const relevantKey = _.isArray(propNames)
+      ? _.find(propNames, (propName) => _.get(item, propName))
+      : propNames;
+    return _.get(item, relevantKey as string, item);
+  };
+}
+
+function getWithKey(getter: (item: unknown, key: string) => unknown) {
+  return (item: unknown, key: string) => [key, getter(item, key)];
+}
+
+export function toTabs(tabs: TabsConfig) {
+  return _.map(tabs, getPropOrKey("value")) as string[];
+}
+
+export function toTabNames(tabs: TabsConfig) {
+  return _.map(tabs, getPropOrKey(["label", "value"])) as string[];
+}
+
+export function toTabLabels(
+  tabs: TabsConfig
+): { label: string; value: string }[] {
+  const getter = getPropOrKey("label");
+  return _.map(
+    _.map(tabs, getWithKey(getter)) as [string, string][],
+    ([value, label]) => ({
+      label,
+      value,
+    })
+  );
+}
+
+export function toTabComponents(tabs: TabsConfig) {
+  const getter = getPropOrValue("component");
+  return _.fromPairs(_.map(tabs, getWithKey(getter)));
+}
 
 function asTabsParams<K extends string, TABS extends readonly string[]>() {
   return {

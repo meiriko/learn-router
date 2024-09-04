@@ -11,6 +11,16 @@ function App() {
           <HStack w="full" overflow="hidden" flexWrap="wrap">
             <CustomLink to="/">HOME</CustomLink>
             <CustomLink to="/tibo">Tibo</CustomLink>
+            <CustomLink to="/tibo/$tabId" params={{ tabId: "overview" }}>
+              Tibo/overview
+            </CustomLink>
+            <CustomLink to="/tibo/st">Tibo/st</CustomLink>
+            <CustomLink to="/tibo/$tabId" params={{ tabId: "full-details" }}>
+              Tibo/full
+            </CustomLink>
+            <CustomLink to="/tibo/$tabId" params={{ tabId: "settings" }}>
+              Tibo/settings
+            </CustomLink>
             <CustomLink
               to="/bongs/$bongId/tag/$tagId"
               params={{ bongId: "bo", tagId: "to" }}

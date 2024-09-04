@@ -7,7 +7,7 @@ import {
 } from "@tanstack/react-router";
 import { PathInfo } from "../../../coponents/PathInfo";
 import { useQuery } from "@tanstack/react-query";
-import { toDefaultTabProps } from "../../../routeUtils";
+import { useDefaultTab } from "../../../routeUtils";
 
 // const queryClient = new QueryClient();
 
@@ -43,7 +43,6 @@ export const Route = createFileRoute("/bongs/$bongId/tag/$tagId")({
     });
     // return { x: 11, rnd: Date.now() % 1000 };
   },
-  ...toDefaultTabProps("tabId"),
 });
 
 function getTags(
@@ -54,6 +53,7 @@ function getTags(
 }
 
 function TagItem() {
+  useDefaultTab(Route);
   const params = Route.useParams();
   const search = Route.useSearch();
   const deps = Route.useLoaderDeps();
